@@ -1,37 +1,56 @@
 # AMI variables
 
 variable "ami_name"{
-  description = "El nombre de la AMI"
-  type        = string
+ description = "El nombre de la AMI"
+ type        = string
 }
 
 variable "ami_owner" {
-  description = "Configuration owner"
-  type        = string
+ description = "Propietario de la AMI"
+ type        = string
+}
+
+variable "ami_description" {
+ description = "Descripcion de la AMI"
+ type        = string
 }
 
 # VPC variables
 
 variable "instance_name"{
-  description = "Nombre de la instancia"
-  type        = string
+ description = "Nombre de la instancia"
+ type        = string
 }
 
 variable "aws_region_az" {
-  description = "AWS region availability zone"
-  type        = string
-  default     = "us-east-1"
+ description = "AWS region availability zone"
+ type        = string
+ default     = "eu-west-1"
 }
 
-variable "eip_tag"{
-  description = "Tag name for eip of instance"
-  type        = string
-}
 
 # CIDR know hosts
 
-variable "office_cidr_block" {
-  description = "Ip publica de la oficina"
-  type        = string
-  default     = "10.0.0.0/32"
+variable "office_yoigo_cidr_block" {
+  description = "IP publica de la oficina (Yoigo)"
+  type        = list
+  default     = ["214.231.191.243/32"]
+}
+
+variable "office_movistar_cidr_block" {
+  description = "IP publica de la oficina (Movistar)"
+  type        = list
+  default     = ["83.56.26.211/32"]
+}
+
+variable "jb_zabbix_server" {
+  description = "IP del servidor z08mon01"
+  type        = list
+  default     = ["62.75.188.164/32"]
+}
+
+variable "emascaro_cidr_block" {
+  description = "IP publica de eMascaro"
+  type        = list
+  default     = ["213.27.245.174/32"]
 }

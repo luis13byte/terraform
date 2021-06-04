@@ -1,20 +1,19 @@
+## Data sources to get VPC, subnet, security group and AMI details ##
 
-##################################################################
-# Data sources to get VPC, subnet, security group and AMI details
-##################################################################
-
-data "aws_vpc" "default" {
-  default = true
+data "aws_vpc" "selected" {
+  state = "available"
 }
 
+## Searching AMI ##
+
 data "aws_subnet_ids" "all" {
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = data.aws_vpc.selected.id
 }
 
 data "aws_ami" "centos7" {
   most_recent = true
 
-  owners = ["679593333241"] # Amazon
+  owners = [var.ami_owner]
 
   filter {
     name = "name"
@@ -23,7 +22,7 @@ data "aws_ami" "centos7" {
 
   filter {
     name = "description"
-    values = ["CentOS 7 with Updates HVM 20200923"]
+    values = [var.ami_description]
   }
 
   filter {
@@ -32,24 +31,42 @@ data "aws_ami" "centos7" {
   }
 }
 
-data "template_file" "user_data" {
-  template = file("./userdata.yaml")
+## Cloud init file ##
+
+data "template_file" "script" {
+  template = file("./scripts/centos7-initial-config.sh")
+
+  vars = {
+    SERVER = var.instance_name
+    EPHEMERALDISK= "/dev/nvme1n1"
+    UUID = ""
+    VERSION_ID = ""
+  }
 }
 
-## Deploy
+data "template_cloudinit_config" "shell_script" {
+  gzip = true
+  base64_encode = true
 
-resource "aws_instance" "z30web" {
+  part {
+    content_type = "text/x-shellscript"
+    content  = data.template_file.script.rendered
+  }
+}
+
+## Deploy instance ##
+
+resource "aws_instance" "z30" {
   ami                         = data.aws_ami.centos7.id
-  instance_type               = "t2.nano"
+  instance_type               = "t3.large"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
   associate_public_ip_address = true
 
-  # no permitido unlimited en t2 instances
-  #credit_specification {
-  #  cpu_credits = "unlimited"
-  #}
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
 
-
+## EBS Volumes ##
   root_block_device {
     volume_type           = "gp3"
     volume_size           = 45
@@ -69,21 +86,18 @@ resource "aws_instance" "z30web" {
     }
   }
 
-  #vpc_security_group_ids  = [ 
-  #  "sg-42352",
-  #  "sg-54371g"
-  #]
+  vpc_security_group_ids  = [ 
+    aws_security_group.sg_web.id,
+    aws_security_group.sg_ftp.id,
+    aws_security_group.sg_default_jb.id
+  ]
 
   tags = {
     Name = var.instance_name
   }
 
 
-  key_name  = "luisback"
-  user_data = data.template_file.user_data.rendered
+  key_name = "luis_back"
+  user_data_base64 = data.template_cloudinit_config.shell_script.rendered
+
 }
-
-#########################################################
-# Modules for deploy the instance and attach ebs volumes
-#########################################################
-
