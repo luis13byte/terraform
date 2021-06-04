@@ -37,7 +37,10 @@ data "template_file" "script" {
   template = file("./scripts/centos7-initial-config.sh")
 
   vars = {
-    SERVER = "nombre"
+    SERVER = var.instance_name
+    EPHEMERALDISK= "/dev/nvme1n1"
+    UUID = ""
+    VERSION_ID = ""
   }
 }
 
@@ -53,7 +56,7 @@ data "template_cloudinit_config" "shell_script" {
 
 ## Deploy instance ##
 
-resource "aws_instance" "z30web" {
+resource "aws_instance" "z30" {
   ami                         = data.aws_ami.centos7.id
   instance_type               = "t3.large"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
@@ -63,7 +66,7 @@ resource "aws_instance" "z30web" {
     cpu_credits = "unlimited"
   }
 
-  ## EBS Volumes ##
+## EBS Volumes ##
   root_block_device {
     volume_type           = "gp3"
     volume_size           = 45
@@ -86,6 +89,7 @@ resource "aws_instance" "z30web" {
   vpc_security_group_ids  = [ 
     aws_security_group.sg_web.id,
     aws_security_group.sg_ftp.id,
+    aws_security_group.sg_default_jb.id
   ]
 
   tags = {
@@ -93,7 +97,7 @@ resource "aws_instance" "z30web" {
   }
 
 
-  key_name = "jb_back"
+  key_name = "luis_back"
   user_data_base64 = data.template_cloudinit_config.shell_script.rendered
 
 }
