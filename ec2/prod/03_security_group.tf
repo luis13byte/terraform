@@ -7,33 +7,11 @@ resource "aws_security_group" "sg_default_jb" {
  vpc_id      = data.aws_vpc.selected.id
 
  ingress {
-   description      = "JOOPbox Office (Yoigo)"
+   description      = "Office (Yoigo)"
    from_port        = 0
    to_port          = 0
    protocol         = "-1"
    cidr_blocks      = var.office_yoigo_cidr_block
- }
-
- ingress {
-   description      = "eMascaro FTP"
-   from_port        = 0  
-   to_port          = 0  
-   protocol         = "-1"
-   cidr_blocks      = var.office_movistar_cidr_block
- }
-
- ingress {
-   from_port        = 0
-   to_port          = 0
-   protocol         = "-1"
-   cidr_blocks      = ["80.28.218.70/32"]
- }
-
- ingress {
-   from_port        = 444    
-   to_port          = 65535
-   protocol         = "tcp"
-   cidr_blocks      = var.jb_zabbix_server
  }
 
  ingress {
@@ -46,13 +24,6 @@ resource "aws_security_group" "sg_default_jb" {
  ingress {
    from_port        = 10050
    to_port          = 10051
-   protocol         = "tcp"
-   cidr_blocks      = var.jb_zabbix_server
- }
-
- ingress {
-   from_port        = 12345
-   to_port          = 12346
    protocol         = "tcp"
    cidr_blocks      = var.jb_zabbix_server
  }
@@ -103,14 +74,6 @@ resource "aws_security_group" "sg_ftp" {
  name        = "ftp"
  description = "Allow FTP traffic"
  vpc_id      = data.aws_vpc.selected.id
-
- ingress {
-   description      = "eMascaro Passive FTP"
-   from_port        = 20021  
-   to_port          = 20121  
-   protocol         = "tcp"
-   cidr_blocks      = ["213.27.245.178/32"]             
- }
 
  ingress {
    description      = "eMascaro FTP"
