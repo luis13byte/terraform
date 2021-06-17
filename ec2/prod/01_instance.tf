@@ -56,7 +56,7 @@ data "template_cloudinit_config" "shell_script" {
 
 ## Deploy instance ##
 
-resource "aws_instance" "z30" {
+resource "aws_instance" "zserver" {
   ami                         = data.aws_ami.centos7.id
   instance_type               = "t3.large"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
