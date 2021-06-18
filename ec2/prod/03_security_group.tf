@@ -3,7 +3,7 @@
 
 resource "aws_security_group" "sg_default_jb" {
  name        = "default_jb"
- description = "General Security Group for JOOPbox"
+ description = "General Security Group"
  vpc_id      = data.aws_vpc.selected.id
 
  ingress {
@@ -66,40 +66,5 @@ resource "aws_security_group" "sg_web" {
 
  tags = {
    Name = "vpc-sg-web"
- }
-}
-
-
-resource "aws_security_group" "sg_ftp" {
- name        = "ftp"
- description = "Allow FTP traffic"
- vpc_id      = data.aws_vpc.selected.id
-
- ingress {
-   description      = "eMascaro FTP"
-   from_port        = 20
-   to_port          = 21
-   protocol         = "tcp"
-   cidr_blocks      = ["213.27.245.178/32"]
- }
-
- ingress {
-   description      = "eMascaro SFTP"
-   from_port        = 2222  
-   to_port          = 2222  
-   protocol         = "tcp"
-   cidr_blocks      = ["213.27.245.178/32"]
- }
-
- egress {
-   from_port        = 0
-   to_port          = 0
-   protocol         = "-1"
-   cidr_blocks      = ["0.0.0.0/0"]
-   #ipv6_cidr_blocks = ["::/0"]
- }
-
- tags = {
-   Name = "vpc-sg-ftp"
  }
 }

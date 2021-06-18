@@ -34,7 +34,7 @@ variable "aws_region_az" {
 variable "office_yoigo_cidr_block" {
   description = "IP publica de la oficina (Yoigo)"
   type        = list
-  default     = ["214.231.191.243/32"]
+  default     = ["67.218.244.36/32"]
 }
 
 variable "office_movistar_cidr_block" {
@@ -44,7 +44,7 @@ variable "office_movistar_cidr_block" {
 }
 
 variable "jb_zabbix_server" {
-  description = "IP del servidor z08mon01"
+  description = "IP del servidor Zabbix"
   type        = list
   default     = ["62.75.188.164/32"]
 }
