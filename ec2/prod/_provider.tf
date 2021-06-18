@@ -3,7 +3,7 @@
 
 provider "aws" {
   region                  = "us-east-1"
-  shared_credentials_file = "./.aws/credentials"
-  profile                 = "luis98tv"
+#  shared_credentials_file = "./.aws/credentials"
+#  profile                 = "luis98tv"
   max_retries             = "1"
 }
