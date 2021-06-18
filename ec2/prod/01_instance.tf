@@ -88,7 +88,6 @@ resource "aws_instance" "zserver" {
 
   vpc_security_group_ids  = [ 
     aws_security_group.sg_web.id,
-    aws_security_group.sg_ftp.id,
     aws_security_group.sg_default_jb.id
   ]
 
