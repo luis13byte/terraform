@@ -58,19 +58,19 @@ data "template_cloudinit_config" "shell_script" {
 
 resource "aws_instance" "zserver" {
   ami                         = data.aws_ami.centos7.id
-  instance_type               = "t3.large"
+  instance_type               = "t2.micro"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
   associate_public_ip_address = true
 
-  credit_specification {
-    cpu_credits = "unlimited"
-  }
+#  credit_specification {
+#    cpu_credits = "unlimited"
+#  }
 
 ## EBS Volumes ##
   root_block_device {
     volume_type           = "gp3"
     volume_size           = 45
-    delete_on_termination = false
+    delete_on_termination = true
     tags = {
       Name = "${var.instance_name}-root"
     }
@@ -80,7 +80,7 @@ resource "aws_instance" "zserver" {
     device_name           = "/dev/sdb"
     volume_type           = "gp3"
     volume_size           = 5
-    delete_on_termination = false
+    delete_on_termination = true
     tags = {
       Name = "${var.instance_name}-ephemeral0-tmp"
     }

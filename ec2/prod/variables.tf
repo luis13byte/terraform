@@ -34,7 +34,7 @@ variable "aws_region_az" {
 variable "office_yoigo_cidr_block" {
   description = "IP publica de la oficina (Yoigo)"
   type        = list
-  default     = ["67.218.244.36/32"]
+  default     = ["67.218.240.40/32"]
 }
 
 variable "office_movistar_cidr_block" {
