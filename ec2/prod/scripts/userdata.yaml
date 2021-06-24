@@ -3,8 +3,8 @@ package_update: true
 packages:
   - docker.io
 write_files:
-  - path: /root/archivo.log
+  - path: /root/example.log
     content: |
-      Terraform ejecutado correctamente y Docker instalado
+      Terraform successfully executed
 runcmd:
   - cd /root
