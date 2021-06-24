@@ -38,8 +38,6 @@ data "template_file" "script" {
 
   vars = {
     SERVER = var.instance_name
-#    EPHEMERALDISK= "" # /dev/nvme1n1
-#    UUID = ""
   }
 }
 
