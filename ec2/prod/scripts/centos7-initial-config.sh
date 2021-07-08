@@ -12,8 +12,8 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJnN+nLrEtw5FH/jZ4dxNY9w1lD9E0oRrkOz
 
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 
-echo "127.0.0.1       ${SERVER}.srv.com ${SERVER}" >> /etc/hosts
-echo "${SERVER}.srv.com" > /etc/hostname
+echo "127.0.0.1       ${SERVER}.srv.company.com ${SERVER}" >> /etc/hosts
+echo "${SERVER}.srv.company.com" > /etc/hostname
 
 sed -i "s/- set_hostname/#- set_hostname/g" /etc/cloud/cloud.cfg
 sed -i "s/- update_hostname/#- update_hostname/g" /etc/cloud/cloud.cfg
@@ -21,9 +21,9 @@ sed -i "s/- update_etc_hosts/#- update_etc_hosts/g" /etc/cloud/cloud.cfg
 
 echo "preserve_hostname: true" >>  /etc/cloud/cloud.cfg
 
-echo "HOSTNAME=${SERVER}.srv.com" >> /etc/sysconfig/network
+echo "HOSTNAME=${SERVER}.srv.company.com" >> /etc/sysconfig/network
 
-hostnamectl set-hostname ${SERVER}.srv.com --static
+hostnamectl set-hostname ${SERVER}.srv.company.com --static
 
 ###############################
 ## Attach ephemeral ebs disk ##
