@@ -28,17 +28,22 @@ variable "aws_region_az" {
  default     = "eu-west-1"
 }
 
+variable "scripts_directory"{
+ description = "Ruta de directorio de scripts"
+ type        = string
+ default     = "./scripts"
+}
 
 # CIDR know hosts
 
 variable "office_yoigo_cidr_block" {
-  description = "IP publica de la oficina (Yoigo)"
+  description = "IP publica de la oficina (ISP 1)"
   type        = list
   default     = ["67.218.240.40/32"]
 }
 
 variable "office_movistar_cidr_block" {
-  description = "IP publica de la oficina (Movistar)"
+  description = "IP publica de la oficina (ISP 2)"
   type        = list
   default     = ["83.56.26.211/32"]
 }

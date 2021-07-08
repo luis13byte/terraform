@@ -1,4 +1,4 @@
-## Script directory
+## Scripts directory
 
 These scripts automate tasks and run as cloud-init during instance deployment with Terraform.
 

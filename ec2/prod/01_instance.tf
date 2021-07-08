@@ -34,7 +34,7 @@ data "aws_ami" "centos7" {
 ## Cloud init file ##
 
 data "template_file" "script" {
-  template = file("./scripts/centos7-initial-config.sh")
+  template = file("${var.scripts_directory}/centos7-initial-config.sh")
 
   vars = {
     SERVER = var.instance_name
