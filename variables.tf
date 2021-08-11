@@ -15,6 +15,13 @@ variable "ami_description" {
  type        = string
 }
 
+# PATH variables
+
+variable "scripts_directory"{
+ description = "Ruta de directorio de scripts"
+ type        = string
+}
+
 # VPC variables
 
 variable "instance_name"{
@@ -26,36 +33,4 @@ variable "aws_region_az" {
  description = "AWS region availability zone"
  type        = string
  default     = "eu-west-1"
-}
-
-variable "scripts_directory"{
- description = "Ruta de directorio de scripts"
- type        = string
- default     = "./scripts"
-}
-
-# CIDR know hosts
-
-variable "office_yoigo_cidr_block" {
-  description = "IP publica de la oficina (ISP 1)"
-  type        = list
-  default     = ["67.218.240.40/32"]
-}
-
-variable "office_movistar_cidr_block" {
-  description = "IP publica de la oficina (ISP 2)"
-  type        = list
-  default     = ["83.56.26.211/32"]
-}
-
-variable "jb_zabbix_server" {
-  description = "IP del servidor Zabbix"
-  type        = list
-  default     = ["62.75.188.164/32"]
-}
-
-variable "emascaro_cidr_block" {
-  description = "IP publica de eMascaro"
-  type        = list
-  default     = ["213.27.245.174/32"]
 }
